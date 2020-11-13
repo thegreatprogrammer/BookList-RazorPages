@@ -23,11 +23,10 @@ namespace BookListRazor._Pages_Books
             return Page();
         }
 
+        // Empty book object
         [BindProperty]
         public Book Book { get; set; }
 
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -35,7 +34,7 @@ namespace BookListRazor._Pages_Books
                 return Page();
             }
 
-            _context.Books.Add(Book);
+            await _context.Books.AddAsync(Book);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

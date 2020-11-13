@@ -38,8 +38,6 @@ namespace BookListRazor._Pages_Books
             return Page();
         }
 
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -47,23 +45,13 @@ namespace BookListRazor._Pages_Books
                 return Page();
             }
 
-            _context.Attach(Book).State = EntityState.Modified;
+            var BookFromDb = await _context.Books.FindAsync(Book.Id);
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!BookExists(Book.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            BookFromDb.Name = Book.Name;
+            BookFromDb.Author = Book.Author;
+            BookFromDb.ISBN = Book.ISBN;
+
+            await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
         }

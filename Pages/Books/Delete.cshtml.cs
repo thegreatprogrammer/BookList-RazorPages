@@ -39,13 +39,16 @@ namespace BookListRazor._Pages_Books
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
+            // If there's no id
             if (id == null)
             {
                 return NotFound();
             }
 
+            // Searching for book by Id
             Book = await _context.Books.FindAsync(id);
 
+            // If book doesn't exists
             if (Book != null)
             {
                 _context.Books.Remove(Book);
