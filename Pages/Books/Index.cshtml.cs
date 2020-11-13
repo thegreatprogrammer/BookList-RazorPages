@@ -18,11 +18,12 @@ namespace BookListRazor._Pages_Books
             _context = context;
         }
 
-        public IList<Book> Book { get;set; }
+        public IEnumerable<Book> Books { get;set; }
 
+        // Get handler
         public async Task OnGetAsync()
         {
-            Book = await _context.Books.ToListAsync();
+            Books = await _context.Books.ToListAsync();
         }
     }
 }
